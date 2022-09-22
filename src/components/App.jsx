@@ -1,5 +1,5 @@
-import Phonebook from 'components/Phonebook/Phonebook';
+import ImageFinder from 'components/ImageFinder/ImageFinder';
 
 export const App = () => {
-  return <Phonebook />;
+  return <ImageFinder />;
 };
