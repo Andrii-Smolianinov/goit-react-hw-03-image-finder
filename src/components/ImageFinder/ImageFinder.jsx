@@ -2,6 +2,8 @@
 import { StylesImageFinder } from './StylesImageFinder';
 import { Component } from 'react';
 
+import Loader from 'components/Loader/Loader'
+
 // import { nanoid } from 'nanoid';
 
 export default class ImageFinder extends Component {
@@ -16,7 +18,9 @@ export default class ImageFinder extends Component {
     
     return (
       <StylesImageFinder>
+      <Loader>
       <div>Hallo ImageFinder</div>
+      </Loader>
       </StylesImageFinder>
     );
   }
