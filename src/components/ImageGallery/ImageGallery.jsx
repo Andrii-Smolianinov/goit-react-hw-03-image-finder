@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
-import { StylesImageGallery } from 'components/ImageGallery/StylesImageGallery';
+// import PropTypes from 'prop-types';
+import { ImageGalleryUl } from 'components/ImageGallery/StylesImageGallery';
 
 export const ImageGallery = () => {
-  return (
-    <StylesImageGallery>
-      <ul class="gallery"></ul>
-    </StylesImageGallery>
-  );
+  return <ImageGalleryUl />;
 };
 
-ImageGallery.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// ImageGallery.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };

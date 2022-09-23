@@ -1,25 +1,30 @@
 import PropTypes from 'prop-types';
-import { StylesSearchbar } from 'components/Searchbar/StylesSearchbar';
+import { ImSearch } from 'react-icons/im';
+import {
+  HeaderSearchbar,
+  SearchForm,
+  SearchFormButton,
+  SearchFormButtonLabel,
+  SearchFormInput,
+} from 'components/Searchbar/StylesSearchbar';
 
 export const Searchbar = ({ onSubmit }) => {
   return (
-    <StylesSearchbar>
-      <header class="searchbar">
-        <form class="form">
-          <button type="submit" class="button">
-            <span class="button-label">Search</span>
-          </button>
-
-          <input
-            class="input"
-            type="text"
-            autocomplete="off"
-            autofocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
-    </StylesSearchbar>
+    <HeaderSearchbar>
+      <SearchForm>
+        <SearchFormButton type="submit" onClick={onSubmit}>
+          <ImSearch style={{ marginRight: 8 }} />
+          <SearchFormButtonLabel></SearchFormButtonLabel>
+        </SearchFormButton>
+        <SearchFormInput
+          className="input"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
+    </HeaderSearchbar>
   );
 };
 

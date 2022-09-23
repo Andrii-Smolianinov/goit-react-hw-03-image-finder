@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import { StylesModal } from 'components/Modal/StylesModal';
+import { Overlay, Modal } from 'components/Modal/StylesModal';
 
-export const Modal = () => {
+export const GalleryModal = ({ src, alt }) => {
   return (
-    <StylesModal>
-      <li class="gallery-item">
-        <img src="" alt="" />
-      </li>
-    </StylesModal>
+    <Overlay>
+      <Modal>
+        <img src={src} alt={alt} />
+      </Modal>
+    </Overlay>
   );
 };
 

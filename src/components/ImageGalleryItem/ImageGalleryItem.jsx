@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
-import { StylesImageGalleryItem } from 'components/ImageGalleryItem/StylesImageGalleryItem';
+import {
+  ImageGalleryItemLi,
+  ImageGalleryImage,
+} from 'components/ImageGalleryItem/StylesImageGalleryItem';
 
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({ src, alt }) => {
   return (
-    <StylesImageGalleryItem>
-      <li class="gallery-item">
-        <img src="" alt="" />
-      </li>
-    </StylesImageGalleryItem>
+    <ImageGalleryItemLi>
+      <ImageGalleryImage src={src} alt={alt} />
+    </ImageGalleryItemLi>
   );
 };
 
