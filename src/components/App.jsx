@@ -1,4 +1,4 @@
-import ImageFinder from 'components/ImageFinder/ImageFinder';
+import ImageFinder from 'components/ImageFinderMain/ImageFinderMain';
 
 export const App = () => {
   return <ImageFinder />;
