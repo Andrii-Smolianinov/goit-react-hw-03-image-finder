@@ -1,10 +1,26 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { ImageGalleryUl } from 'components/ImageGallery/StylesImageGallery';
+import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
-export const ImageGallery = () => {
-  return <ImageGalleryUl />;
+export default function ImageGallery({ items, onClick }) {
+  return (
+    <ImageGalleryUl>
+      {items.map(({ id, tags, webformatURL, largeImageURL, onClick }) => (
+        <ImageGalleryItem
+          key={id}         
+          alt={tags}
+          src={webformatURL}
+          largeImageURL={largeImageURL}
+          onClick={onClick}
+        />
+      ))}
+    </ImageGalleryUl>
+  );
+}
+ImageGallery.propTypes = {
+  items: PropTypes.array,
+  onClick: PropTypes.func,
 };
-
-// ImageGallery.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+ImageGallery.defaultProps = {
+  items: [],
+};

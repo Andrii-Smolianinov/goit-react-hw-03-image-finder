@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { ImSearch } from 'react-icons/im';
+import { toast } from 'react-toastify';
 import {
   HeaderSearchbar,
   SearchForm,
@@ -8,26 +9,46 @@ import {
   SearchFormInput,
 } from 'components/Searchbar/StylesSearchbar';
 
-export const Searchbar = ({ onSubmit }) => {
-  return (
-    <HeaderSearchbar>
-      <SearchForm>
-        <SearchFormButton type="submit" onClick={onSubmit}>
-          <ImSearch style={{ marginRight: 8 }} />
-          <SearchFormButtonLabel></SearchFormButtonLabel>
-        </SearchFormButton>
-        <SearchFormInput
-          className="input"
-          type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-        />
-      </SearchForm>
-    </HeaderSearchbar>
-  );
-};
+export default class Searchbar extends Component {
+  state = {
+    searchQuery: '',
+  };
 
-Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+  handleInputChange = event => {
+    this.setState({ searchQuery: event.target.value });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    if (this.state.searchQuery.trim() === '') {
+      //перевірка на порожній рядок при відправці формию.trim відрізає від рядка пробіли, якщо вони є
+      toast.warn("🥴🥴🥴 порожній запит", { theme: "colored" });
+      return;
+    }
+    this.props.searchFunc(this.state.searchQuery); //searchFunc - пропс у якому передається searchbarSubmit з App. звязуємо state з App.
+    this.setState({ searchQuery: '' });
+  };
+
+  render() {
+    return (
+      <HeaderSearchbar>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchFormButton type="submit">
+            <ImSearch style={{ marginRight: 8 }} />
+            <SearchFormButtonLabel></SearchFormButtonLabel>
+          </SearchFormButton>
+          <SearchFormInput
+            className="input"
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            onChange={this.handleInputChange}
+            value={this.state.searchQuery}
+          />
+        </SearchForm>
+      </HeaderSearchbar>
+    );
+  }
+}

@@ -1,65 +1,93 @@
 import { Component } from 'react';
-// import axios from 'axios';
-import { Searchbar } from 'components/Searchbar/Searchbar';
-
-// import { nanoid } from 'nanoid';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ImageGallery from 'components/ImageGallery/ImageGallery';
+import { Loader } from 'components/Loader/Loader';
+import { Button } from 'components/Button/Button';
+import Searchbar from 'components/Searchbar/Searchbar';
 
 export default class App extends Component {
-  handleSearch;
+  state = {
+    loader: false,
+    items: [],
+    error: null,
+    page: 1,
+    searchQuery: '',
+    limit: 12,
+  };
 
-  // state = {
-  //   loader: false,
-  //   items: [],
-  //   error: null,
-  //   page: 1,
-  //   searchQuery: '',
-  // };
-  // componentDidMount() {
-  //   this.fetchPosts();
-  // }
-  // fetchPosts() {
-  //   // const { page } = this.state;
-  //   this.setState({
-  //     loader: true,
-  //   });
-  // }
-  // async fetchImages() {
-  //   const { page, searchQuery } = this.state;
-  //   const API_KEY = '30113842-e56eb4bc3062add658b965540';
-  //   const BASE_URL = 'https://pixabay.com/api/';
+  //у componentDidMount робимо http запит та передаєм ф-цію fetchPosts яка обробляє запит
+  componentDidMount() {
+    this.setState({
+      loader: true,
+    });
+    this.fetchPosts();
+  }
 
-  //   const searchParam = new URLSearchParams({
-  //     key: API_KEY,
-  //     q: searchQuery,
-  //     image_type: 'photo',
-  //     orientation: 'horizontal',
-  //     safesearch: 'true',
-  //     page: page,
-  //     per_page: 12,
-  //   });
+  //приймає prevProps та prevState. У даному випадку нам не потрібно prevProps тому "_,". Зміна пропсів та стейту повторно викликає componentDidUpdate. необхідно перевіряти щоб не було зациклення.
+  componentDidUpdate(_, prevState) {
+    const { page } = this.state;
+    if (prevState.page !== page) {
+      this.fetchPosts();
+    }
+  }
 
-  //   return axios
-  //     .get(`${BASE_URL}?${searchParam}`)
-  //     .then(response => {
-  //       if (response.status !== 200) {
-  //         return Promise.reject(`Error: ${response.message}`);
-  //       }
-  //       if (!response.data.totalHits) {
-  //         return Promise.reject('Будь-ласка, введіть коректну назву');
-  //       }
-  //       if (this.page === 1) {
-  //       }
-  //       this.incrementPage();
-  //       return response.data;
-  //     })
-  //     .catch(err => {
-  //       return Promise.reject(err);
-  //     });
-  // }
+  fetchPosts() {
+    const { searchQuery, limit, page } = this.state;
+    this.setState({
+      loader: true, //підключаємо loader доки обробляється http запит
+    });
 
+    const BASE_URL = 'https://pixabay.com/api/';
+    const API_KEY = '30113842-e56eb4bc3062add658b965540';
+
+    axios
+      .get(
+        `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&_page${page}&per_page=${limit}&image_type=photo`
+      )
+      .then(({ data }) => {
+        console.log('data', data);
+        this.setState(({ items }) => {
+          return {
+            items: [...items, ...data.hits],
+          };
+        });
+      })
+      .catch(error => {
+        this.setState({ error });
+      })
+      .finally(() => {
+        this.setState({
+          loader: false,
+        });
+      });
+  }
+  // ф-ція loadMore додає функціонал на кнопку "Load more"
+  loadMore = () => {
+    this.setState(({ page }) => {
+      return {
+        page: page + 1,
+      };
+    });
+  };
+  //ф-ція передає Submit на Searchbar
+  searchbarSubmit = searchQuery => {
+    this.setState({ searchQuery });
+  };
   render() {
-    // const { loader, items, error, page } = this.state;
-
-    return <Searchbar />;
+    const { items, loader, error } = this.state;
+    const isPosts = Boolean(items.length);
+    const { loadMore } = this;
+    return (
+      <div>
+        <Searchbar searchFunc={this.searchbarSubmit} />
+        {loader && <Loader />}
+        {error && <p>omg...</p>}
+        {isPosts && <ImageGallery items={items}></ImageGallery>}
+        {isPosts && <Button onLoadMore={loadMore} />}
+        <ToastContainer position="top-right" autoClose={2500} pauseOnHover />
+      </div>
+    );
   }
 }
