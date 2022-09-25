@@ -5,13 +5,13 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 export default function ImageGallery({ items, onClick }) {
   return (
     <ImageGalleryUl>
-      {items.map(({ id, tags, webformatURL, largeImageURL, onClick }) => (
+      {items.map(({ id, webformatURL, largeImageURL, tags }) => (
         <ImageGalleryItem
-          key={id}         
-          alt={tags}
-          src={webformatURL}
-          largeImageURL={largeImageURL}
-          onClick={onClick}
+        key={id}
+        webformatURL={webformatURL}
+        largeImageURL={largeImageURL}
+        tags={tags}
+        onClick={onClick}
         />
       ))}
     </ImageGalleryUl>

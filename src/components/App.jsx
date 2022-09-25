@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import { Loader } from 'components/Loader/Loader';
@@ -13,8 +13,9 @@ export default class App extends Component {
     items: [],
     error: null,
     page: 1,
-    searchQuery: '',
-    limit: 12,
+    searchQuery: 'forest',
+    totalPages: 0,
+    
   };
 
   //у componentDidMount робимо http запит та передаєм ф-цію fetchPosts яка обробляє запит
@@ -34,7 +35,7 @@ export default class App extends Component {
   }
 
   fetchPosts() {
-    const { searchQuery, limit, page } = this.state;
+    const { searchQuery, page } = this.state;
     this.setState({
       loader: true, //підключаємо loader доки обробляється http запит
     });
@@ -44,7 +45,7 @@ export default class App extends Component {
 
     axios
       .get(
-        `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&_page${page}&per_page=${limit}&image_type=photo`
+        `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&page=${page}&per_page=12&image_type=photo`
       )
       .then(({ data }) => {
         console.log('data', data);
@@ -65,9 +66,9 @@ export default class App extends Component {
   }
   // ф-ція loadMore додає функціонал на кнопку "Load more"
   loadMore = () => {
-    this.setState(({ page }) => {
-      return {
-        page: page + 1,
+    this.setState(({page}) => {
+      return {        
+        page: page + 1
       };
     });
   };
@@ -77,17 +78,19 @@ export default class App extends Component {
   };
   render() {
     const { items, loader, error } = this.state;
+    console.log('items', items);
     const isPosts = Boolean(items.length);
     const { loadMore } = this;
     return (
       <div>
         <Searchbar searchFunc={this.searchbarSubmit} />
         {loader && <Loader />}
-        {error && <p>omg...</p>}
+        {error && toast.warn("спробуйте ще", { theme: "colored" })}
         {isPosts && <ImageGallery items={items}></ImageGallery>}
-        {isPosts && <Button onLoadMore={loadMore} />}
+        {isPosts && <Button loadMore={loadMore}/>}
         <ToastContainer position="top-right" autoClose={2500} pauseOnHover />
       </div>
     );
   }
 }
+// {isPosts && <button onClick={loadMore}>Load more</button>}

@@ -23,7 +23,7 @@ export default class Searchbar extends Component {
 
     if (this.state.searchQuery.trim() === '') {
       //перевірка на порожній рядок при відправці формию.trim відрізає від рядка пробіли, якщо вони є
-      toast.warn("🥴🥴🥴 порожній запит", { theme: "colored" });
+      toast.warn("🥴🥴🥴 введіть запит!", { theme: "colored" });
       return;
     }
     this.props.searchFunc(this.state.searchQuery); //searchFunc - пропс у якому передається searchbarSubmit з App. звязуємо state з App.

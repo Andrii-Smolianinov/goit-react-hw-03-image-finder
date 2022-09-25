@@ -4,13 +4,18 @@ import {
   ImageGalleryImage,
 } from 'components/ImageGalleryItem/StylesImageGalleryItem';
 
-export const ImageGalleryItem = ({ alt, src, largeImageURL, onClick }) => {
+export const ImageGalleryItem = ({
+  webformatURL,
+  largeImageURL,
+  tags,
+  onClick,
+}) => {
   return (
     <ImageGalleryItemLi>
       <ImageGalleryImage
+        src={webformatURL}
+        alt={tags}
         onClick={() => onClick(largeImageURL)}
-        src={src}
-        alt={alt}        
       />
     </ImageGalleryItemLi>
   );
