@@ -26,8 +26,8 @@ export default class Searchbar extends Component {
       return;
     }
     const { onSubmit } = this.props;
-    onSubmit({...this.state})
-     //onSubmit - пропс у якому передається у <Searchbar onSubmit={onSearch} з PostSearch. звязує state з PostSearch.
+    onSubmit({ ...this.state });
+    //onSubmit - пропс у якому передається у <Searchbar onSubmit={onSearch} з PostSearch. звязує state з PostSearch.
     this.setState({ searchQuery: '' });
   };
 

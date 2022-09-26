@@ -5,7 +5,7 @@ import Searchbar from 'components/Searchbar/Searchbar';
 import { searchPosts } from 'components/API/API';
 import { Loader } from 'components/Loader/Loader';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
-import  GalleryModal  from 'components/Modal/Modal';
+import GalleryModal from 'components/Modal/Modal';
 import { Button } from 'components/Button/Button';
 // import { nanoid } from 'nanoid';
 
@@ -15,7 +15,7 @@ export default class GallerySearch extends Component {
     items: [],
     error: null,
     page: 1,
-    searchQuery: '',    
+    searchQuery: '',
     largeImageURL: '',
   };
 
@@ -57,19 +57,21 @@ export default class GallerySearch extends Component {
 
   onSearch = ({ searchQuery }) => {
     this.setState({
+      items: [],
+      page: 1,
       searchQuery,
     });
   };
 
-  openModal = (largeImageURL) => {
+  openModal = largeImageURL => {
     this.setState({
-      largeImageURL
+      largeImageURL,
     });
   };
 
   closeModal = () => {
     this.setState({
-      largeImageURL: ''
+      largeImageURL: '',
     });
   };
 
@@ -87,13 +89,13 @@ export default class GallerySearch extends Component {
     const { onSearch, closeModal, openModal, loadMore, toast } = this;
     return (
       <>
-        {largeImageURL && <GalleryModal onClose={closeModal} largeImageURL={largeImageURL} />}
+        {largeImageURL && (
+          <GalleryModal onClose={closeModal} largeImageURL={largeImageURL} />
+        )}
         <Searchbar onSubmit={onSearch} />
         {loader && <Loader />}
         {error && toast.error('🥴🥴🥴 Error!', { theme: 'colored' })}
-        {isPosts && (
-          <ImageGallery items={items} onClick={openModal} />
-        )}
+        {isPosts && <ImageGallery items={items} onClick={openModal} />}
         {isPosts && <Button loadMore={loadMore} />}
         <ToastContainer position="top-right" autoClose={2000} pauseOnHover />
       </>
