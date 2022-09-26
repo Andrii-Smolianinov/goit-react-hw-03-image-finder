@@ -7,16 +7,16 @@ import { Loader } from 'components/Loader/Loader';
 import ImageGallery from 'components/ImageGallery/ImageGallery';
 import  GalleryModal  from 'components/Modal/Modal';
 import { Button } from 'components/Button/Button';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 
-export default class PostsSearch extends Component {
+export default class GallerySearch extends Component {
   state = {
     loader: false,
     items: [],
     error: null,
     page: 1,
-    searchQuery: '',
-    modalOpen: false,
+    searchQuery: '',    
+    largeImageURL: '',
   };
 
   componentDidUpdate(_, prevState) {
@@ -61,15 +61,15 @@ export default class PostsSearch extends Component {
     });
   };
 
-  openModal = () => {
+  openModal = (largeImageURL) => {
     this.setState({
-      modalOpen: true,
+      largeImageURL
     });
   };
 
   closeModal = () => {
     this.setState({
-      modalOpen: false,
+      largeImageURL: ''
     });
   };
 
@@ -80,19 +80,19 @@ export default class PostsSearch extends Component {
       };
     });
   };
-  itemsId = nanoid();
+  // itemsId = nanoid();
   render() {
-    const { items, loader, error, modalOpen } = this.state;
+    const { items, loader, error, largeImageURL } = this.state;
     const isPosts = Boolean(items.length);
-    const { onSearch, closeModal, openModal, itemsId, loadMore, toast } = this;
+    const { onSearch, closeModal, openModal, loadMore, toast } = this;
     return (
       <>
-        {modalOpen && <GalleryModal onClose={closeModal} />}
+        {largeImageURL && <GalleryModal onClose={closeModal} largeImageURL={largeImageURL} />}
         <Searchbar onSubmit={onSearch} />
         {loader && <Loader />}
         {error && toast.error('🥴🥴🥴 Error!', { theme: 'colored' })}
         {isPosts && (
-          <ImageGallery items={items} onClick={openModal} id={itemsId} />
+          <ImageGallery items={items} onClick={openModal} />
         )}
         {isPosts && <Button loadMore={loadMore} />}
         <ToastContainer position="top-right" autoClose={2000} pauseOnHover />

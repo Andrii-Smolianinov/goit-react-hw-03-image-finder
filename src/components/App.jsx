@@ -1,13 +1,13 @@
 
-// import Posts from 'components/API/Post';
-import PostsSearch from 'components/API/PostSearch';
+// import Gallery from 'components/API/Gallery';
+import GallerySearch from 'components/API/GallerySearch';
 
 
 function App() {
   return (
     <div className="App">
-      <PostsSearch />
-      {/* <Posts />       */}
+      <GallerySearch />
+      {/* <Gallery />       */}
     </div>
   );
 }

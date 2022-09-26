@@ -7,7 +7,7 @@ import { Button } from 'components/Button/Button';
 import { getPosts } from 'components/API/API';
 
 
-export default class Posts extends Component {
+export default class Gallery extends Component {
   state = {
     loader: false,
     items: [],
