@@ -3,9 +3,9 @@ import { Overlay, Modal } from 'components/Modal/StylesModal';
 
 export const GalleryModal = ({ src, alt }) => {
   return (
-    <Overlay>
+    <Overlay onClick={this.handleBackdropClick}>
       <Modal>
-        <img src={src} alt={alt} />
+        <img src={this.props.largeImageURL} alt={alt} />
       </Modal>
     </Overlay>
   );

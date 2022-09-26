@@ -8,6 +8,7 @@ import {
   SearchFormButtonLabel,
   SearchFormInput,
 } from 'components/Searchbar/StylesSearchbar';
+import { nanoid } from 'nanoid';
 
 export default class Searchbar extends Component {
   state = {
@@ -15,25 +16,26 @@ export default class Searchbar extends Component {
   };
 
   handleInputChange = event => {
-    this.setState({ searchQuery: event.target.value });
+    this.setState({ searchQuery: event.target.value.toLowerCase() });
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
     if (this.state.searchQuery.trim() === '') {
-      //перевірка на порожній рядок при відправці формию.trim відрізає від рядка пробіли, якщо вони є
-      toast.warn("🥴🥴🥴 введіть запит!", { theme: "colored" });
+      toast.warn('🥴🥴🥴 введіть запит!', { theme: 'colored' });
       return;
     }
     this.props.searchFunc(this.state.searchQuery); //searchFunc - пропс у якому передається searchbarSubmit з App. звязуємо state з App.
     this.setState({ searchQuery: '' });
   };
-
+  searchId = nanoid();
   render() {
+    const { searchQuery } = this.state;
+    const { handleSubmit, handleInputChange, searchId } = this;
     return (
       <HeaderSearchbar>
-        <SearchForm onSubmit={this.handleSubmit}>
+        <SearchForm onSubmit={handleSubmit}>
           <SearchFormButton type="submit">
             <ImSearch style={{ marginRight: 8 }} />
             <SearchFormButtonLabel></SearchFormButtonLabel>
@@ -44,8 +46,9 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.handleInputChange}
-            value={this.state.searchQuery}
+            onChange={handleInputChange}
+            value={searchQuery} 
+            id={searchId}
           />
         </SearchForm>
       </HeaderSearchbar>
