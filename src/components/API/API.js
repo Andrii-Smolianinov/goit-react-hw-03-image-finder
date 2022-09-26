@@ -19,7 +19,7 @@ export const getPosts = async (page = 1) => {
   return data;
 };
 
-export const searchPosts = async (q, page = 1) => {
+export const searchPosts = async (q, page) => {
   const { data } = await instance.get('&', {
     params: {
       page,

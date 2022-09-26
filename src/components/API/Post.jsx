@@ -73,7 +73,7 @@ export default class Posts extends Component {
         {error && toast.warn('спробуйте ще', { theme: 'colored' })}
         {isPosts && <ImageGallery items={items} onClick={this.onOpenModal}></ImageGallery>}        
         {isPosts && <Button loadMore={loadMore} />}        
-        <ToastContainer position="top-right" autoClose={2500} pauseOnHover />
+        <ToastContainer position="top-right" autoClose={2000} pauseOnHover />
       </div>
     );
   }

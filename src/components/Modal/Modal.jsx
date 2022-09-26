@@ -1,17 +1,33 @@
-import PropTypes from 'prop-types';
+import { Component } from 'react';
+import { createPortal } from 'react-dom';
 import { Overlay, Modal } from 'components/Modal/StylesModal';
 
-export const GalleryModal = ({ src, alt }) => {
-  return (
-    <Overlay onClick={this.handleBackdropClick}>
-      <Modal>
-        <img src={this.props.largeImageURL} alt={alt} />
-      </Modal>
-    </Overlay>
-  );
-};
+const modalRoot = document.getElementById('modal-root');
 
-Modal.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-};
+export default class GalleryModal extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.closeModal);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.closeModal);
+  }
+
+  closeModal = ({ target, currentTarget, code }) => {
+    if (target === currentTarget || code === 'Escape') {
+      this.props.onClose();
+    }
+  };
+
+  render() {
+    const { closeModal } = this;
+    return createPortal(
+      <Overlay onClick={closeModal}>
+        <Modal>
+          <img src={this.props.largeImageURL} alt="" />
+        </Modal>
+      </Overlay>,
+      modalRoot
+    );
+  }
+}

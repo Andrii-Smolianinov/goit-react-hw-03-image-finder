@@ -3,7 +3,11 @@ import styled from 'styled-components';
 export const Backdrop = styled.div`
 width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.9);
+  background-image: linear-gradient(
+    to right,
+    rgb(10, 2, 124),
+    rgb(13, 46, 233)
+  );
   position: fixed;
   top: 0;
   z-index: 100;
@@ -18,7 +22,7 @@ width: 75px;
   border: 10px solid rgba(13, 71, 161, 0.6);
   border-radius: 50%;
   border-left: 50%;
-  border-left-color: #0D47A1;
+  border-left-color: #FFFF00;
   animation: loader 1.3s linear infinite;
   @keyframes loader {
   100% {
