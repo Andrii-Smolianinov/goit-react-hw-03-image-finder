@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const HeaderSearchbar = styled.header`
+position: fixed;
+opacity: 0.5;
   top: 0;
   left: 0;
   position: sticky;
