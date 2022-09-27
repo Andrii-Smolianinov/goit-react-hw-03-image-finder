@@ -7,11 +7,11 @@ export default function ImageGallery({ items, onClick }) {
     <ImageGalleryUl>
       {items.map(({ id, webformatURL, largeImageURL, tags }) => (
         <ImageGalleryItem
-        key={id}
-        webformatURL={webformatURL}
-        largeImageURL={largeImageURL}
-        tags={tags}
-        onClick={onClick}
+          key={id}
+          webformatURL={webformatURL}
+          largeImageURL={largeImageURL}
+          tags={tags}
+          onClick={onClick}
         />
       ))}
     </ImageGalleryUl>

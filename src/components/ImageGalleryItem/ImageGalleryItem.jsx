@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   ImageGalleryItemLi,
   ImageGalleryImage,
@@ -21,9 +21,9 @@ export const ImageGalleryItem = ({
   );
 };
 
-// ImageGalleryItem.propTypes = {
-//   tags: PropTypes.string.isRequired,
-//   webformatURL: PropTypes.string.isRequired,
-//   largeImageURL: PropTypes.string.isRequired,
-//   onClick: PropTypes.func,
-// };
+ImageGalleryItem.propTypes = {
+  tags: PropTypes.string,
+  webformatURL: PropTypes.string,
+  largeImageURL: PropTypes.string,
+  onClick: PropTypes.func,
+};

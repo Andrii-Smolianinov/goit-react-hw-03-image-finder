@@ -17,6 +17,7 @@ export default class GallerySearch extends Component {
     page: 1,
     searchQuery: '',
     largeImageURL: '',
+    totalPages: 0,
   };
 
   componentDidUpdate(_, prevState) {
@@ -41,6 +42,7 @@ export default class GallerySearch extends Component {
       this.setState(({ items }) => {
         return {
           items: [...items, ...data.hits],
+          totalPages: data.totalHits,
         };
       });
     } catch (error) {
@@ -60,6 +62,7 @@ export default class GallerySearch extends Component {
       items: [],
       page: 1,
       searchQuery,
+      totalPages: 0,
     });
   };
 
@@ -84,7 +87,8 @@ export default class GallerySearch extends Component {
   };
   // itemsId = nanoid();
   render() {
-    const { items, loader, error, largeImageURL } = this.state;
+    const { items, loader, error, largeImageURL, totalPages, page } =
+      this.state;
     const isPosts = Boolean(items.length);
     const { onSearch, closeModal, openModal, loadMore, toast } = this;
     return (
@@ -96,7 +100,7 @@ export default class GallerySearch extends Component {
         {loader && <Loader />}
         {error && toast.error('🥴🥴🥴 Error!', { theme: 'colored' })}
         {isPosts && <ImageGallery items={items} onClick={openModal} />}
-        {isPosts && <Button loadMore={loadMore} />}
+        {page < Math.ceil(totalPages / 15) && <Button loadMore={loadMore} />}
         <ToastContainer position="top-right" autoClose={2000} pauseOnHover />
       </>
     );
